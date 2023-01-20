@@ -1,22 +1,22 @@
 class Register{
 
-    constructor(name, email, phone, password1, password2) {
+    constructor(name, email, phone, originPassword, matchPassword) {
         this.name = name;
         this.email = email;
         this.phone = phone;
-        this.password1 = password1;
-        this.password2 = password2;
+        this.originPassword = originPassword;
+        this.matchPassword = matchPassword;
     }
 
     userValidation(){
-        if (this.name !== null && this.email !== null && this.phone !== null && this.password !== null && this.password2 !== null){
-            console.info("validasi berhasil");
-            // if (){
-            //    pengecekan telepon, email, dan password
-            // }
-        }else{
-            console.info("data harus terisi semua");
+        if (this.name !== null && this.email !== null && this.phone !== null && this.originPassword !== null && this.matchPassword !== null){
+            if (this.phoneValidation() === true){
+                if(this.passwordValidation() === true){
+                    return true;
+                }
+            }
         }
+        return false;
     }
 
     emailValidation(){
@@ -34,8 +34,8 @@ class Register{
     }
 
     passwordValidation(){
-        if (this.password.length >= 8){
-            if(this.password1 === this.password2){
+        if (this.originPassword.length >= 8){ //masih ada yg perlu direvisi
+            if(this.originPassword === this.matchPassword){
                 return true;
             }
         }
@@ -44,7 +44,12 @@ class Register{
 }
 
 {
-    const user = new Register(null, "syahiraisnaeni@gmail.com", "08889125991", "Syahira123");
+    const user = new Register("Syahira Isnaeni Dewi", "syahiraisnaeni@gmail.com", "08889125991", "Syahira123","Syahira123");
     console.info(user);
-    user.validasiUser();
+    if(user.userValidation() === true){
+        console.info("Register Berhasil");
+    }else {
+        console.info("Register Gagal");
+    }
+
 }
