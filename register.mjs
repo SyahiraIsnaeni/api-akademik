@@ -24,7 +24,8 @@ class Register{
     }
 
     phoneValidation(){
-        if(this.phone !== NaN){
+        let temp = parseInt(this.phone);
+        if(temp !== NaN){
             if(this.phone <= 20 && this.phone > 0){
                 return true;
             }
