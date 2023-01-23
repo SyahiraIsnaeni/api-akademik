@@ -1,5 +1,5 @@
 import {Login} from "../login.mjs";
-// testing semua validasi user (sukses)
+// testing validasi user (sukses)
 {
     const user = new Login("syahiraisnaeni@gmail.com", "Syahira123")
     console.info(user);

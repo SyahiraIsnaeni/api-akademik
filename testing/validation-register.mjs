@@ -22,7 +22,7 @@ import {Register} from "../register.mjs";
 }
 
 
-// testing semua validasi user (sukses)
+// testing validasi user (sukses)
 {
     const user = new Register("Syahira Isnaeni Dewi", "syahiraisnaeni@gmail.com", "08889125991", "Syahira123","Syahira123");
     console.info(user);
