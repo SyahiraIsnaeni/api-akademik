@@ -1,13 +1,9 @@
-const express = require('express');
-const usersRoutes = require('./src/users/routes');
+import express from 'express';
+import usersRoutes from './routes.mjs';
 const app = express();
 const port = 3000;
 
 app.use(express.json());
-
-app.get("/", (req, res) => {
-    res.send("Hello World!");
-});
 
 app.use("/api/v1/users", usersRoutes);
 

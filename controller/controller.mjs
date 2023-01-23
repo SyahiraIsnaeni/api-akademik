@@ -1,5 +1,5 @@
-const pool = require('../../db_users');
-//const queries = require('./queries');
+const pool = require('../database/database.mjs');
+const queries = require('../queries.mjs');
 
 const getUsers = (req, res) => {
     pool.query(queries.getUsers, (error, results)=>{
@@ -19,16 +19,16 @@ const getUsersById = (req, res) => {
     })
 };
 
-const addUsers = (req, res) => {
-    const {name, email, age, dob} = req.body;
+const addUser = (req, res) => {
+    const {email, nama, no_telp, password} = req.body;
     pool.query(queries.checkEmailExists, [email], (error, results)=>{
         if (results.rows.length){
             res.send("Email telah digunakan");
         }
 
     pool.query(
-        queries.addUsers,
-        [name, email, age, dob],
+        queries.addUser,
+        [email, nama, no_telp, password],
         (error, results) => {
             if(error) throw error;
             res.status(200).send("Data berhasil ditambahkan!");
@@ -37,41 +37,8 @@ const addUsers = (req, res) => {
     });
 };
 
-const removeUsers = (req, res) => {
-    const id = parseInt(req.params.id);
-
-    pool.query(queries.getUsersById, [id], (error, results) => {
-        const noUsersfound = !results.rows.length;
-        if (noUsersfound){
-            res.send("Data tidak ditemukan");
-        }
-        pool.query(queries.removeUsers, [id], (error, results) => {
-            if(error) throw error;
-                res.status(200).send("Data berhasil dihapus.");
-        });
-    });
-};
-
-const updateUsers= (req, res) => {
-    const id = parseInt(req.params.id);
-    const {name} = req.body;
-
-    pool.query(queries.getUsersById, [id], (error, results) => {
-        const noUsersfound = !results.rows.length;
-        if (noUsersfound){
-            res.send("Data tidak ditemukan");
-        }
-        pool.query(queries.updateUsers, [name, id], (error, results) => {
-            if(error) throw error;
-                res.status(200).send("Data berhasil diperbarui.");
-        });
-    });
-};
-
 module.exports = {
     getUsers,
     getUsersById,
-    addUsers,
-    removeUsers,
-    updateUsers,
+    addUser
 };
