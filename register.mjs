@@ -34,10 +34,11 @@ class Register{
     phoneValidation(){
         const phoneArray = this.phone.split("");
         if(this.phone.length > 20 || this.phone.length <= 0){
-            for (let i = 0; i < phoneArray.length; i++) {
-                if (isNaN(Number(phoneArray[i]))){
-                    return false;
-                }
+            return false;
+        }
+        for (let i = 0; i < phoneArray.length; i++) {
+            if (isNaN(Number(phoneArray[i]))){
+                return false;
             }
         }
         return true;
@@ -53,30 +54,29 @@ class Register{
     }
 }
 
-//Testing Validasi Password (sukses)
+// Testing Validasi Password (sukses)
 // {
 //     const user = new Register("Syahira Isnaeni Dewi", "syahiraisnaeni@gmail.com", "08889125991", "Syahira123","Syahira123");
 //
 //     console.info(user.passwordValidation());
 // }
 
-
-//Testing validasi email (sukses)
+// Testing validasi email (sukses)
 // {
 //     const user = new Register("Syahira Isnaeni Dewi", "syahiraisnaeni@gmail.com", "08889125991", "Syahira123","Syahira123");
 //
 //     console.info(user.emailValidation());
 // }
 
-//Testing validasi phone (belum berhasil)
-{
-    const user = new Register("Syahira Isnaeni Dewi", "syahiraisnaeni@gmail.com", "", "Syahira123","Syahira123");
+// Testing validasi phone (berhasil)
+// {
+//     const user = new Register("Syahira Isnaeni Dewi", "syahiraisnaeni@gmail.com", "08889125991", "Syahira123","Syahira123");
+//
+//     console.info(user.phoneValidation());
+// }
 
-    console.info(user.phoneValidation());
-}
 
-
-// testing semua validasi user
+// testing semua validasi user (sukses)
 // {
 //     const user = new Register("Syahira Isnaeni Dewi", "syahiraisnaeni@gmail.com", "08889125991", "Syahira123","Syahira123");
 //     console.info(user);
