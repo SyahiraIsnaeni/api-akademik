@@ -1,5 +1,6 @@
 const pool = require('../database/database');
 const queries = require('../query/queries');
+const register = require('../register');
 
 const getDataUsers = (req, res) => {
     pool.query(queries.getUsers, (error, results)=>{
