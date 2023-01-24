@@ -1,4 +1,4 @@
-export class Register{
+class Register{
 
     constructor(name, email, phone, originPassword, matchPassword) {
         this.name = name;
@@ -53,3 +53,5 @@ export class Register{
         return false;
     }
 }
+
+module.exports = Register;

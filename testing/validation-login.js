@@ -1,7 +1,7 @@
-import {Login} from "../login.mjs";
+const login = require('../login');
 // testing validasi user (sukses)
 {
-    const user = new Login("syahiraisnaeni@gmail.com", "Syahira123")
+    const user = new login("syahiraisnaeni@gmail.com", "Syahira123")
     console.info(user);
     if(user.userValidation() === true){
         console.info("Login Berhasil");

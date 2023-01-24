@@ -1,4 +1,4 @@
-export class Login{
+class Login{
     constructor(email, password) {
         this.email = email;
         this.password = password;
@@ -11,3 +11,5 @@ export class Login{
         return false
     }
 }
+
+module.exports = Login;
