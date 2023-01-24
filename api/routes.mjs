@@ -1,10 +1,8 @@
 const {Router} = require('express');
-const controller = require('../controller/controller.mjs');
+import {getDataUsers, getDataUserById, addDataUser} from "../controller/controller.mjs";
 
-const router = Router();
+export const router = Router();
 
-router.get("/", controller.getUsers);
-router.post("/", controller.addUser);
-router.get("/:id", controller.getUsersById);
-
-module.exports = router;
+router.get("/", getDataUsers);
+router.post("/", addDataUser);
+router.get("/:id", getDataUserById);

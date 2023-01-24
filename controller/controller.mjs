@@ -1,16 +1,16 @@
-const pool = require('../database/database.mjs');
-const queries = require('../queries.mjs');
+import {pool} from "../database/database.mjs";
+import {getUsers, addUser, checkEmailExists, getUserById} from "../query/queries.mjs";
 
-const getUsers = (req, res) => {
-    pool.query(queries.getUsers, (error, results)=>{
+export const getDataUsers = (req, res) => {
+    pool.query(getUsers, (error, results)=>{
         if (error) throw error;
         res.status(200).json(results.rows);
     });
 };
 
-const getUsersById = (req, res) => {
+export const getDataUserById = (req, res) => {
     const id = parseInt(req.params.id);
-    pool.query(queries.getUsersById, [id], (error, results) => {
+    pool.query(getUserById, [id], (error, results) => {
         const noUsersfound = !results.rows.length;
         if (noUsersfound){
             res.send("Data tidak ditemukan");
@@ -19,26 +19,20 @@ const getUsersById = (req, res) => {
     })
 };
 
-const addUser = (req, res) => {
-    const {email, nama, no_telp, password} = req.body;
-    pool.query(queries.checkEmailExists, [email], (error, results)=>{
+export const addDataUser = (req, res) => {
+    const {name, email, phone, password} = req.body;
+    pool.query(checkEmailExists, [email], (error, results)=>{
         if (results.rows.length){
             res.send("Email telah digunakan");
         }
 
     pool.query(
-        queries.addUser,
-        [email, nama, no_telp, password],
+        addUser,
+        [name, email, phone, password],
         (error, results) => {
             if(error) throw error;
             res.status(200).send("Data berhasil ditambahkan!");
         }
     )
     });
-};
-
-module.exports = {
-    getUsers,
-    getUsersById,
-    addUser
 };
