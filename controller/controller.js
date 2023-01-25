@@ -27,14 +27,14 @@ const addDataUser = (req, res) => {
             res.send("Email telah digunakan");
         }
 
-    pool.query(
-        queries.addUser,
-        [name, email, phone, password],
-        (error, results) => {
-            if(error) throw error;
-            res.status(200).send("Data berhasil ditambahkan!");
-        }
-    )
+        pool.query(
+            queries.addUser,
+            [name, email, phone, password],
+            (error, results) => {
+                if(error) throw error;
+                res.status(200).send("Data berhasil ditambahkan!");
+            }
+        )
     });
 };
 
