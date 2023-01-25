@@ -1,6 +1,6 @@
 const pool = require('../database/database');
 const queries = require('../query/queries');
-// const login = require('../login');
+const login = require('../login');
 
 const getDataUsers = (req, res) => {
     pool.query(queries.getUsers, (error, results)=>{
@@ -22,14 +22,24 @@ const getDataUserById = (req, res) => {
 
 const addDataUser = (req, res) => {
     const {email, password} = req.body;
+    const loginUser = new login(email, password);
+    if (loginUser.userValidation() == true){
     pool.query(queries.checkEmailExists, [email], (error, results)=>{
         if (results.rows.length){
-            res.status(200).send("Berhasil");
+            pool.query(queries.checkPasswordExists, [password], (error, results)=>{
+                if (results.rows.length){
+                    res.status(200).send("Berhasil");
+                }
+                
+            });
+        }else{
+            res.status(400).send("gagal!");
         }
-        res.status(400).send("gagal!");
-
-     
+        
     });
+}else{
+    res.status(400).send("Gagal");
+}
 };
 
 module.exports = {
