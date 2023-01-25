@@ -21,27 +21,33 @@ const getDataUserById = (req, res) => {
 };
 
 const addDataUser = (req, res) => {
-    const {name, email, phone, password} = req.body;
-    pool.query(queries.checkEmailExists, [email], (error, results)=>{
-        if (results.rows.length){
-            res.send("Email telah digunakan");
-        }
-
-        pool.query(queries.checkPhoneExists, [phone], (error, results) => {
-                if (results.rows.length){
-                    res.send("Phone telah digunakan");
-                }
-                pool.query(
-                    queries.addUser,
-                    [name, email, phone, password],
-                    (error, results) => {
-                        if(error) throw error;
-                        res.status(200).send("Data berhasil ditambahkan!");
-                    }
-                )
+    const {name, email, phone, originPassword, matchPassword} = req.body;
+    const registerUser = new register(name, email, phone, originPassword, matchPassword);
+    if (registerUser.userValidation() == true){
+        pool.query(queries.checkEmailExists, [email], (error, results)=>{
+            if (results.rows.length){
+                if(error) throw error;
+                res.status(400).send("Email telah digunakan");
             }
-        ) 
-    });
+            pool.query(queries.checkPhoneExists, [phone], (error, results) => {
+                    if (results.rows.length){
+                        if(error) throw error;
+                        res.status(400).send("Phone telah digunakan");
+                    }
+                    pool.query(
+                        queries.addUser,
+                        [name, email, phone, originPassword],
+                        (error, results) => {
+                            if(error) throw error;
+                            res.status(200).send("Data berhasil ditambahkan!");
+                        }
+                    )
+                }
+            )
+        });
+    }else{
+        res.status(400).send("Gagal Registrasi");
+    }
 };
 
 module.exports = {
