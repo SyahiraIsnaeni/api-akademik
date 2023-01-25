@@ -20,7 +20,7 @@ const getDataUserById = (req, res) => {
     })
 };
 
-const addDataUser = (req, res) => {
+const checkDataUser = (req, res) => {
     const {email, password} = req.body;
     const loginUser = new login(email, password);
     if (loginUser.userValidation() == true){
@@ -28,12 +28,12 @@ const addDataUser = (req, res) => {
         if (results.rows.length){
             pool.query(queries.checkPasswordExists, [password], (error, results)=>{
                 if (results.rows.length){
-                    res.status(200).send("Berhasil");
+                    res.status(200).send("Berhasil Login!");
                 }
                 
             });
         }else{
-            res.status(400).send("gagal!");
+            res.status(400).send("Gagal Login!");
         }
         
     });
@@ -45,5 +45,5 @@ const addDataUser = (req, res) => {
 module.exports = {
     getDataUsers,
     getDataUserById,
-    addDataUser,
+    checkDataUser,
 };
